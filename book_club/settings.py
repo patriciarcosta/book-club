@@ -140,3 +140,8 @@ LOGOUT_REDIRECT_URL = "members:home"
 
 # Celery
 CELERY_BROKER_URL = "redis://localhost:6379/0"
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    }
+}

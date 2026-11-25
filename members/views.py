@@ -4,6 +4,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import Member
 from .forms import MemberForm
 from django.views.generic import DetailView, ListView, TemplateView
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from .utils import get_member_count
 
 class AboutView(TemplateView):
     template_name = "members/about.html"
@@ -14,7 +17,7 @@ def members(request):
 def home(request):
     context = {
         "club_name": "Page Turners",
-        "member_count": Member.objects.count(),
+        "member_count": get_member_count(),
         "banner": "<em>Next meeting: the first Friday of the month</em>.",
     }
     return render(request, "members/home.html", context)    
@@ -73,6 +76,7 @@ def members_by_month(request, year, month):
     return render(request, "members/member_list.html", {"members": members})
 
 
+@method_decorator(cache_page(60), name="dispatch")
 class MemberListView(ListView):
     model = Member
     template_name = "members/member_list.html"
