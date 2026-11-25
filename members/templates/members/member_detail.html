@@ -1,0 +1,11 @@
+{% extends "members/base.html" %}
+
+{% block title %}{{ member.id }}{% endblock %}
+
+{% block content %}
+  <h1>{{ member.firstname }} {{ member.lastname}}</h1>
+  <p>Email: {{ member.email }}</p>
+  <p>Phone: {{ member.phone }}</p>
+  <p>Joined: {{ member.joined_date }}</p>
+  <p><a href="{% url 'members:list' %}">Back to the list</a></p>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Home{% endblock %} | Book Club</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'members:home' %}">
+        <img src="{% static 'members/images/logo.svg' %}" alt="" width="28" height="28">
+        Book Club
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="main-nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'members:list' %}">Members</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'members:about' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'members:add_member' %}">Add member</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 ms-md-3">
+          {% if user.is_authenticated %}
+            <span class="navbar-text text-white">Hello, {{ user.username }}</span>
+            <form method="post" action="{% url 'logout' %}" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-light btn-sm">Log out</button>
+            </form>
+          {% else %}
+            <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">Log in</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container my-4">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="container text-secondary small border-top pt-3 mb-4">
+    <p class="mb-0">&copy; {% now "Y" %} Book Club</p>
+    <p class="mb-0">Pages viewed this session: {{ request.session.page_views }}</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

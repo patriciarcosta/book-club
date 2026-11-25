@@ -1,0 +1,18 @@
+{% extends "members/base.html" %}
+
+{% block title %}Members{% endblock %}
+
+{% block content %}
+  <h1>Book Club Members</h1>
+  <ul>
+    {% for member in members %}
+      <li>
+        <a href="{% url 'members:detail' member.id %}">{{ member.firstname }} {{ member.lastname }}</a>
+        &mdash; {{ member.joined_date }}
+        <br>Favorite book: {{ member.favorite_book|default:"Not set" }}
+      </li>
+    {% empty %}
+      <li>No members yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
