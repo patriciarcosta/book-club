@@ -85,6 +85,7 @@ class MemberListView(ListView):
 
 class MemberDetailView(DetailView):
     model = Member
+    queryset = Member.objects.prefetch_related("readings__book")
     template_name = "members/member_detail.html"
     context_object_name = "member"
 

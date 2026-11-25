@@ -7,5 +7,15 @@
   <p>Email: {{ member.email }}</p>
   <p>Phone: {{ member.phone }}</p>
   <p>Joined: {{ member.joined_date }}</p>
+
+  <h2>Livros lidos</h2>
+  <ul>
+    {% for reading in member.readings.all %}
+      <li>{{ reading.book.title }} ({{ reading.book.author }}), terminado em {{ reading.date_finished }}</li>
+    {% empty %}
+      <li>Nenhuma leitura registrada.</li>
+    {% endfor %}
+  </ul>
+
   <p><a href="{% url 'members:list' %}">Back to the list</a></p>
 {% endblock %}
