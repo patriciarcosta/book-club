@@ -137,3 +137,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "members:home"
 LOGOUT_REDIRECT_URL = "members:home"
+
+# Celery
+CELERY_BROKER_URL = "redis://localhost:6379/0"
